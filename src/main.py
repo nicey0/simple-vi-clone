@@ -8,7 +8,7 @@ def draw_screen(scr: curses.window):
 
 def main(scr: curses.window):
     cursor: list = [0, 0]
-    mode: Mode = Mode
+    mode: Mode
     while True:
         scr.clear()
         draw_screen(scr)
@@ -16,7 +16,7 @@ def main(scr: curses.window):
         scr.refresh()
         # m, data = mode.process_key(scr.getch())
         #---Testing-####################################
-        m = (M.BREAK)
+        m = M.BREAK
         key = scr.getch()
         if key == ord('j'):
             m, data = (M.CURSOR, [cursor[0]+1, cursor[1]])
@@ -27,10 +27,10 @@ def main(scr: curses.window):
         elif key == ord('l'):
             m, data = (M.CURSOR, [cursor[0], cursor[1]+1])
         #---Testing-####################################
+        if m == M.CURSOR:
+            cursor = data
         if m == M.BREAK:
             break
-        elif m == M.CURSOR:
-            cursor = data
         scr.refresh()
 
 if __name__ == '__main__':
