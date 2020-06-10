@@ -1,8 +1,10 @@
 from messages import Message as M
-from modes.insert import Insert
-from modes.visual import Visual
+from modes.mode import Mode
+from modes import insert
+from modes import visual
 
-class Normal:
+class Normal(Mode):
+    highlights = False
     def process_key(self, key: int) -> tuple:
         if key == ord('j'):
             return (M.CURSOR, [1, 0])
@@ -13,6 +15,6 @@ class Normal:
         elif key == ord('l'):
             return (M.CURSOR, [0, 1])
         elif key == ord('i'):
-            return (M.SWITCH, Insert)
+            return (M.SWITCH, insert.Insert)
         elif key == ord('v'):
-            return (M.SWITCH, Visual)
+            return (M.SWITCH, visual.Visual)
