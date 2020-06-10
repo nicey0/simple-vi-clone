@@ -1,7 +1,7 @@
 from messages import Message as M
 
 class Normal:
-    def process_key(self, key: int):
+    def process_key(self, key: int) -> tuple:
         if key == ord('j'):
             return (M.CURSOR, [1, 0])
         elif key == ord('k'):
