@@ -10,3 +10,5 @@ class Visual(Mode):
             return (M.CURSOR, [1, 0])
         elif key == ord('k'):
             return (M.CURSOR, [-1, 0])
+        else:
+            return (M.CONTINUE,)

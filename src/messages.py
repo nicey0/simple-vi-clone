@@ -1,4 +1,5 @@
 class Message:
     BREAK = 0
-    CURSOR = 1
-    SWITCH = 2
+    CONTINUE = 1
+    CURSOR = 2
+    SWITCH = 3

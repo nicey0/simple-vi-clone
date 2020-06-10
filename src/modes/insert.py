@@ -8,3 +8,5 @@ class Insert(Mode):
     def process_key(self, key: int) -> tuple:
         if key == BS:
             return (M.SWITCH, normal.Normal)
+        else:
+            return (M.CONTINUE,)

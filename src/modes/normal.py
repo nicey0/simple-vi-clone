@@ -18,3 +18,5 @@ class Normal(Mode):
             return (M.SWITCH, insert.Insert)
         elif key == ord('v'):
             return (M.SWITCH, visual.Visual)
+        else:
+            return (M.CONTINUE,)
