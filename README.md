@@ -11,12 +11,16 @@ Simple Vi clone. Not supposed to be used by anyone.
     - x: delete character on cursor (cursor shifts to left, like \<BS\>)
     - d: delete line
     - y: yank line
-    - p: paste last yanked line
+    - p: paste last yanked line (below cursor)
+    - P: paste last yanked line (above cursor)
     - i: insert mode (behind cursor)
+    - I: insert mode (start of line)
     - a: insert mode (in front of cursor)
+    - A: insert mode (end of line)
     - v: line visual mode
 - Visual
-    - j/k: down/up/
+    - \<BS\>: normal mode
+    - j/k: down/up
     - d: delete all highlighted lines
     - y: yank all highlighted lines
 
