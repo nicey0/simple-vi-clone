@@ -27,10 +27,10 @@ def main(scr: curses.window) -> None:
         if m == M.CURSOR:
             cursor[0] += data[0]
             cursor[1] += data[1]
-        elif m == M.BREAK:
-            break
         elif m == M.SWITCH:
             mode = data()
+        elif m == M.BREAK:
+            break
         # Highlighting
         if mode.highlights:
             if not last_hl:
