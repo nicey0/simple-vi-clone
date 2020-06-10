@@ -16,7 +16,7 @@ Simple Vi clone. Not supposed to be used by anyone.
     - a: insert mode (in front of cursor)
     - v: line visual mode
 - Visual
-    - j/k/h/l: down/up/left/right
+    - j/k: down/up/
     - d: delete all highlighted lines
     - y: yank all highlighted lines
 
@@ -29,6 +29,7 @@ Simple Vi clone. Not supposed to be used by anyone.
     - Enum. Contains different message codes for file=>file interactions
 - /src/modes/
     - Contains most of the logic for each mode. Modes here never interact directly 
-    - /src/modes/insert.py
-    - /src/modes/normal.py
-    - /src/modes/visual.py
+    - /src/modes/mode.py    => base class
+    - /src/modes/insert.py  => insert mode
+    - /src/modes/normal.py  => normal mode
+    - /src/modes/visual.py  => visual mode (line-based)
