@@ -14,8 +14,8 @@ def debug(scr: curses.window, *args):
 
 def main(scr: curses.window) -> None:
     cursor: list = [0, 0] # y, x
-    highlighting: bool = True # If true, update highlighted[1] at the end of the main loop
-    highlighted: list = [2, 0] # start, current
+    highlighted: list = [0, 0] # start, current
+    last_hl: bool = False # if the program was highlighting lines in the last iteration
     mode: Mode = Normal()
     while True:
         scr.clear()
@@ -33,8 +33,14 @@ def main(scr: curses.window) -> None:
             break
         elif m == M.SWITCH:
             mode = data()
-        if highlighting:
+        if mode.highlights:
+            if not last_hl:
+                highlighted[0] = cursor[0]
             highlighted[1] = cursor[0]
+        else:
+            if last_hl:
+                highlighted = [0, 0]
+        last_hl = mode.highlights
 
 if __name__ == '__main__':
     curses.wrapper(main)
