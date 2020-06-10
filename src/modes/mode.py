@@ -1,4 +1,4 @@
 class Mode:
-    @staticmethod
-    def process_key(key: int) -> dict:
+    highlights: bool
+    def process_key(self, key: int) -> tuple:
         raise NotImplementedError

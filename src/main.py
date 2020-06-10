@@ -14,39 +14,32 @@ def debug(scr: curses.window, *args):
 
 def main(scr: curses.window) -> None:
     cursor: list = [0, 0] # y, x
-    highlighting: bool = True # If true, update highlighted[1] at the end of the
-                               # main loop
-    highlighted: list = [2, 0] # start, current
-    mode: Mode
+    highlighted: list = [0, 0] # start, current
+    last_hl: bool = False # if the program was highlighting lines in the last iteration
+    mode: Mode = Normal()
     while True:
         scr.clear()
         draw_screen(scr, cursor, highlighted)
-        # Debug bar
         debug(scr, cursor, highlighted)
-        #---Testing-####################################
         scr.move(cursor[0], cursor[1])
-        #---Testing-####################################
         scr.refresh()
-        # m, data = mode.process_key(scr.getch())
-        #---Testing-####################################
-        m = M.BREAK
-        key = scr.getch()
-        # Highlight second line
-        if key == ord('j'):
-            m, data = (M.CURSOR, [cursor[0]+1, cursor[1]])
-        elif key == ord('k'):
-            m, data = (M.CURSOR, [cursor[0]-1, cursor[1]])
-        elif key == ord('h'):
-            m, data = (M.CURSOR, [cursor[0], cursor[1]-1])
-        elif key == ord('l'):
-            m, data = (M.CURSOR, [cursor[0], cursor[1]+1])
-        #---Testing-####################################
+        m, data = mode.process_key(scr.getch())
         if m == M.CURSOR:
-            cursor = data
+            cursor[0] += data[0]
+            cursor[1] += data[1]
+        elif m == M.SWITCH:
+            mode = data()
         elif m == M.BREAK:
             break
-        if highlighting:
+        # Highlighting
+        if mode.highlights:
+            if not last_hl:
+                highlighted[0] = cursor[0]
             highlighted[1] = cursor[0]
+        else:
+            if last_hl:
+                highlighted = [0, 0]
+        last_hl = mode.highlights
 
 if __name__ == '__main__':
     curses.wrapper(main)
