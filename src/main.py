@@ -20,9 +20,7 @@ def main(scr: curses.window) -> None:
     while True:
         scr.clear()
         draw_screen(scr, cursor, highlighted)
-        #+++ Debug bar
         debug(scr, cursor, highlighted)
-        #--- Debug bar
         scr.move(cursor[0], cursor[1])
         scr.refresh()
         m, data = mode.process_key(scr.getch())
@@ -33,6 +31,7 @@ def main(scr: curses.window) -> None:
             break
         elif m == M.SWITCH:
             mode = data()
+        # Highlighting
         if mode.highlights:
             if not last_hl:
                 highlighted[0] = cursor[0]
