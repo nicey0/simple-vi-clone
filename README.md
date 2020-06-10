@@ -8,7 +8,7 @@ Simple Vi clone. Not supposed to be used by anyone.
     - \<BS\>: normal mode
 - Normal
     - j/k/h/l: down/up/left/right
-    - x: delete character on cursor (cursor shifts to left, like \<BS\>
+    - x: delete character on cursor (cursor shifts to left, like \<BS\>)
     - d: delete line
     - y: yank line
     - p: paste last yanked line
