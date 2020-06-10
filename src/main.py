@@ -20,7 +20,7 @@ def main(scr: curses.window) -> None:
     while True:
         scr.clear()
         draw_screen(scr, cursor, highlighted)
-        debug(scr, cursor, highlighted)
+        debug(scr, mode, cursor, highlighted)
         scr.move(cursor[0], cursor[1])
         scr.refresh()
         m, data = mode.process_key(scr.getch())

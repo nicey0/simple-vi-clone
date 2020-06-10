@@ -4,7 +4,8 @@ from modes import insert
 from modes import visual
 
 class Normal(Mode):
-    highlights = False
+    def __init__(self):
+        self.highlights = False
     def process_key(self, key: int) -> tuple:
         if key == ord('j'):
             return (M.CURSOR, [1, 0])
@@ -19,4 +20,6 @@ class Normal(Mode):
         elif key == ord('v'):
             return (M.SWITCH, visual.Visual)
         else:
-            return (M.CONTINUE,)
+            return (M.CONTINUE, 0)
+    def __str__(self):
+        return "normal"
