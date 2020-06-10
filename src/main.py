@@ -31,6 +31,8 @@ def main(scr: curses.window) -> None:
             cursor[1] += data[1]
         elif m == M.BREAK:
             break
+        elif m == M.SWITCH:
+            mode = data()
         if highlighting:
             highlighted[1] = cursor[0]
 
