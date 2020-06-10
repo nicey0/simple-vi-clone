@@ -3,21 +3,27 @@ from modes.mode import Mode
 from modes.normal import Normal
 from messages import Message as M
 
-def draw_screen(scr: curses.window):
-    pass
+def draw_screen(scr: curses.window, cursor: list, highlighted: list) -> None:
+    scr.addstr(cursor[0], 0, " "*scr.getmaxyx()[1], curses.A_REVERSE)
 
-def main(scr: curses.window):
-    cursor: list = [0, 0]
+def main(scr: curses.window) -> None:
+    cursor: list = [0, 0] # y, x
+    highlighting: bool = False # If true, update highlighted[1] at the end of the
+                               # main loop
+    highlighted: list = [2, 0] # start, current
     mode: Mode
     while True:
         scr.clear()
-        draw_screen(scr)
+        draw_screen(scr, cursor)
+        #---Testing-####################################
         scr.move(cursor[0], cursor[1])
+        #---Testing-####################################
         scr.refresh()
         # m, data = mode.process_key(scr.getch())
         #---Testing-####################################
         m = M.BREAK
         key = scr.getch()
+        # Highlight second line
         if key == ord('j'):
             m, data = (M.CURSOR, [cursor[0]+1, cursor[1]])
         elif key == ord('k'):
@@ -29,9 +35,10 @@ def main(scr: curses.window):
         #---Testing-####################################
         if m == M.CURSOR:
             cursor = data
-        if m == M.BREAK:
+        elif m == M.BREAK:
             break
-        scr.refresh()
+        if highlighting:
+            highlighted[1] = cursor[0]
 
 if __name__ == '__main__':
     curses.wrapper(main)
