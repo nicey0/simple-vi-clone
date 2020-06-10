@@ -4,17 +4,25 @@ from modes.normal import Normal
 from messages import Message as M
 
 def draw_screen(scr: curses.window, cursor: list, highlighted: list) -> None:
-    scr.addstr(cursor[0], 0, " "*scr.getmaxyx()[1], curses.A_REVERSE)
+    # Highlighted lines
+    for hl in range(min(highlighted), max(highlighted)):
+        scr.addstr(hl, 0, " "*scr.getmaxyx()[1], curses.A_REVERSE)
+
+def debug(scr: curses.window, *args):
+    sargs = str(args)[1:-1]
+    scr.addstr(scr.getmaxyx()[0]-1, 1, sargs)
 
 def main(scr: curses.window) -> None:
     cursor: list = [0, 0] # y, x
-    highlighting: bool = False # If true, update highlighted[1] at the end of the
+    highlighting: bool = True # If true, update highlighted[1] at the end of the
                                # main loop
     highlighted: list = [2, 0] # start, current
     mode: Mode
     while True:
         scr.clear()
-        draw_screen(scr, cursor)
+        draw_screen(scr, cursor, highlighted)
+        # Debug bar
+        debug(scr, cursor, highlighted)
         #---Testing-####################################
         scr.move(cursor[0], cursor[1])
         #---Testing-####################################
