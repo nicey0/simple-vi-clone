@@ -4,9 +4,12 @@ from modes import normal
 from messages import Message as M
 
 class Insert(Mode):
-    highlights = False
+    def __init__(self):
+        self.highlights = False
     def process_key(self, key: int) -> tuple:
         if key == BS:
             return (M.SWITCH, normal.Normal)
         else:
-            return (M.CONTINUE,)
+            return (M.CONTINUE, 0)
+    def __str__(self):
+        return "insert"
