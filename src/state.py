@@ -1,6 +1,6 @@
 import curses
-import src.modes.mode as mode
-import src.modes.normal as normal
+import modes.mode as mode
+import modes.normal as normal
 
 class State:
     scr: curses.window

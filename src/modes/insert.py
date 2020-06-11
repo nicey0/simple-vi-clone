@@ -1,7 +1,7 @@
 from curses import KEY_BACKSPACE as BS
-import src.modes.mode as mode
-import src.modes.normal as normal
-import src.messages as m
+import modes.mode as mode
+import modes.normal as normal
+import messages as m
 
 class Insert(mode.Mode):
     def __init__(self):

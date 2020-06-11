@@ -1,8 +1,8 @@
-import src.modes.mode as mode
-import src.modes.insert as insert
-import src.modes.normal as normal
-import src.modes.visual as visual
-import src.messages as m
+import modes.mode as mode
+import modes.insert as insert
+import modes.normal as normal
+import modes.visual as visual
+import messages as m
 
 class Normal(mode.Mode):
     def __init__(self):
