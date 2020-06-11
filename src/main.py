@@ -46,9 +46,12 @@ def main(scr: curses.window):
             line: str = s.content[s.cursor[0]]
             s.content[s.cursor[0]] = line[0:s.cursor[1]] + data + \
                 line[s.cursor[1]:]
+            s.cursor[1] += 1
         elif m == M.APPEND:
-            # s.content[s.cursor[0]] += data
-            pass
+            line: str = s.content[s.cursor[0]]
+            s.content[s.cursor[0]] = line[0:s.cursor[1]+1] + data + \
+                line[s.cursor[1]+1:]
+            s.cursor[1] += 1
         # Highlighting
         if s.mode.highlights:
             if not s.last_hl:
