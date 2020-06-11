@@ -29,8 +29,8 @@ def main(scr: curses.window):
             s.cursor[1] += data[1]
             if s.cursor[1] < 0:
                 s.cursor[1] = 0
-            elif s.cursor[1] > s.scr.getmaxyx()[1]-1:
-                s.cursor[1] = s.scr.getmaxyx()[1]-1
+            elif s.cursor[1] > len(s.content[s.cursor[0]])-1:
+                s.cursor[1] = len(s.content[s.cursor[0]])-1
         elif m == M.SWITCH:
             s.mode = data()
         elif m == M.BREAK:
