@@ -84,7 +84,7 @@ def main(scr: curses.window):
 
 
 def _debug(scr: curses.window, *args):
-    sargs = str(args)[1:-1]
+    sargs = str([str(arg) for arg in args])[1:-1]
     scr.addstr(scr.getmaxyx()[0]-1, 1, sargs)
 
 
