@@ -19,6 +19,10 @@ class Normal(Mode):
             return (M.SWITCH, insert.Insert)
         elif key == ord('v'):
             return (M.SWITCH, visual.Visual)
+        elif key == ord('W'):
+            return (M.SAVE, 0)
+        elif key == ord('q'):
+            return (M.BREAK, 0)
         else:
             return (M.CONTINUE, 0)
     def __str__(self):
