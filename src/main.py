@@ -1,9 +1,9 @@
 import curses
 from traceback import print_exc
-import src.modes.mode as mode
-import src.modes.normal as normal
-from .messages import Message as M
-from .state import State
+import modes.mode as mode
+import modes.normal as normal
+from messages import Message as M
+from state import State
 
 def draw_screen(s: State):
     # Highlighted lines
