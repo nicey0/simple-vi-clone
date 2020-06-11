@@ -33,11 +33,13 @@ Simple Vi clone. Not supposed to be used by anyone.
 
 ## Files
 - /src/main.py
-    - Controls modes.py. Doesn't have much logic code.
+    - Controls the modes. Has all the logic code
 - /src/messages.py
-    - Enum. Contains different message codes for file=>file interactions
+    - Enum. Contains different message codes for file to file interactions
+- /src/state.py
+    - Program state
 - /src/modes/
-    - Contains most of the logic for each mode. Modes here never interact directly 
+    - Processes character and has some basic attributes.
     - /src/modes/mode.py    => base class
     - /src/modes/insert.py  => insert, line-insert, append and line-append mode
     - /src/modes/normal.py  => normal mode
