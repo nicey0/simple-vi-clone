@@ -27,10 +27,11 @@ def main(scr: curses.window):
             elif s.cursor[0] >= len(s.content):
                 s.cursor[0] = len(s.content)-1
             s.cursor[1] += data[1]
+            maxcur = len(s.content[s.cursor[0]])-1
             if s.cursor[1] < 0:
                 s.cursor[1] = 0
-            elif s.cursor[1] > len(s.content[s.cursor[0]])-1:
-                s.cursor[1] = len(s.content[s.cursor[0]])-1
+            elif s.cursor[1] > maxcur:
+                s.cursor[1] = maxcur if maxcur > 0 else 0
         elif m == M.SWITCH:
             s.mode = data()
         elif m == M.BREAK:
@@ -56,12 +57,14 @@ def main(scr: curses.window):
         elif m == M.DEBUG:
             if data not in s.debug:
                 s.debug.append(data)
-        # Newlines
-        for i, line in enumerate(s.content):
-            split = line.split('\n')
-            if len(split) > 1:
-                s.content = s.content[0:i] + [s.replace('\n', '') for s in
-                                              split] + s.content[i+1:]
+        # Newline
+        if data == '\n':
+            s.cursor[1] -= 1
+            for i, line in enumerate(s.content):
+                split = line.split('\n')
+                split = [s.replace('\n', '') for s in split]
+                if len(split) > 1:
+                    s.content = s.content[0:i] + split + s.content[i+1:]
         # Highlighting
         if s.mode.highlights:
             if not s.last_hl:
