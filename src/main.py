@@ -4,11 +4,12 @@ from state import State
 
 
 def draw_screen(s: State):
-    # Highlighted lines
-    # for hl in range(min(s.highlighted), max(s.highlighted)):
-    #   s.scr.addstr(hl, 0, " "*s.scr.getmaxyx()[1], curses.A_REVERSE)
     for i, line in enumerate(s.content):
-        s.scr.addstr(i, 0, line[0:s.scr.getmaxyx()[1]])
+        r = range(min(s.highlighted), max(s.highlighted)+1)
+        if i in r:
+            s.scr.addstr(i, 0, line[0:s.scr.getmaxyx()[1]], curses.A_REVERSE)
+        else:
+            s.scr.addstr(i, 0, line[0:s.scr.getmaxyx()[1]])
 
 
 def increase_cursor(s: State, values: list):
@@ -79,7 +80,7 @@ def main(scr: curses.window):
             s.highlighted[1] = s.cursor[0]
         else:
             if s.last_hl:
-                s.highlighted = [0, 0]
+                s.highlighted = [-1, -1]
         s.last_hl = s.mode.highlights
 
 
