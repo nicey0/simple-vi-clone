@@ -5,4 +5,4 @@ class Message:
     SWITCH = 3
     SAVE = 4
     INSERT = 5
-    APPEND = 5
+    APPEND = 6
