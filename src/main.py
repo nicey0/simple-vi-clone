@@ -49,10 +49,12 @@ def main(s: State):
         elif m == M.SWITCH:
             s.mode = data()
         elif m == M.BREAK:
+            end(s)
             break
         elif m == M.SAVE:
             with open(s.filename, 'w') as f:
-                f.write(s.content)
+                for line in s.content:
+                    f.write(line)
         # Highlighting
         if s.mode.highlights:
             if not s.last_hl:
@@ -71,13 +73,19 @@ def run(s: State):
         s.scr.keypad(True)
         main(s)
     except:
+        end(s)
         print_exc()
-        curses.endwin()
+
+def end(s: State):
+    s.scr.keypad(False)
+    curses.nocbreak()
+    curses.echo()
+    curses.endwin()
 
 def _debug(scr: curses.window, *args):
     sargs = str(args)[1:-1]
     scr.addstr(scr.getmaxyx()[0]-1, 1, sargs)
 
 if __name__ == '__main__':
-    s = State()
+    s = State("hello.py")
     run(s)
