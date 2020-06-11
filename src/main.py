@@ -1,5 +1,4 @@
 import curses
-from traceback import print_exc
 from messages import Message as M
 from state import State
 
@@ -9,10 +8,11 @@ def draw_screen(s: State):
     # for hl in range(min(s.highlighted), max(s.highlighted)):
     #   s.scr.addstr(hl, 0, " "*s.scr.getmaxyx()[1], curses.A_REVERSE)
     for i, line in enumerate(s.content):
-        s.scr.addstr(i+1, 0, line[0:s.scr.getmaxyx()[1]])
+        s.scr.addstr(i, 0, line[0:s.scr.getmaxyx()[1]])
 
 
-def main(s: State):
+def main(scr: curses.window):
+    s = State(scr, "hello.txt")
     while True:
         s.scr.clear()
         draw_screen(s)
@@ -24,8 +24,8 @@ def main(s: State):
             s.cursor[0] += data[0]
             if s.cursor[0] < 0:
                 s.cursor[0] = 0
-            elif s.cursor[0] > s.scr.getmaxyx()[0]-1:
-                s.cursor[0] = s.scr.getmaxyx()[0]-1
+            elif s.cursor[0] >= len(s.content):
+                s.cursor[0] = len(s.content)-1
             s.cursor[1] += data[1]
             if s.cursor[1] < 0:
                 s.cursor[1] = 0
@@ -34,12 +34,24 @@ def main(s: State):
         elif m == M.SWITCH:
             s.mode = data()
         elif m == M.BREAK:
-            end(s)
             break
         elif m == M.SAVE:
             with open(s.filename, 'w') as f:
-                for line in s.content:
-                    f.write(line)
+                f.writelines(s.content)
+        elif m == M.INSERTL:
+            s.content[s.cursor[0]] = data + s.content[s.cursor[0]]
+        elif m == M.APPENDL:
+            s.content[s.cursor[0]] += data
+        elif m == M.INSERT:
+            line: str = s.content[s.cursor[0]]
+            s.content[s.cursor[0]] = line[0:s.cursor[1]] + data + \
+                line[s.cursor[1]:]
+            s.cursor[1] += 1
+        elif m == M.APPEND:
+            line: str = s.content[s.cursor[0]]
+            s.content[s.cursor[0]] = line[0:s.cursor[1]+1] + data + \
+                line[s.cursor[1]+1:]
+            s.cursor[1] += 1
         # Highlighting
         if s.mode.highlights:
             if not s.last_hl:
@@ -51,30 +63,10 @@ def main(s: State):
         s.last_hl = s.mode.highlights
 
 
-def run(s: State):
-    try:
-        curses.start_color()
-        curses.noecho()
-        curses.cbreak()
-        s.scr.keypad(True)
-        main(s)
-    except Exception:
-        end(s)
-        print_exc()
-
-
-def end(s: State):
-    s.scr.keypad(False)
-    curses.nocbreak()
-    curses.echo()
-    curses.endwin()
-
-
 def _debug(scr: curses.window, *args):
     sargs = str(args)[1:-1]
     scr.addstr(scr.getmaxyx()[0]-1, 1, sargs)
 
 
 if __name__ == '__main__':
-    s = State("hello.py")
-    run(s)
+    curses.wrapper(main)

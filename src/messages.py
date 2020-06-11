@@ -4,3 +4,7 @@ class Message:
     CURSOR = 2
     SWITCH = 3
     SAVE = 4
+    INSERT = 5
+    APPEND = 6
+    INSERTL = 7
+    APPENDL = 8
