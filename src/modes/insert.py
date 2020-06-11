@@ -6,6 +6,7 @@ import messages as m
 
 class AddText(mode.Mode):
     def __init__(self, addType: int):
+        self.highlights = False
         self.allowdchars = [ord(c) for c in "qwertyuiopasdfghjklzxcvbnm" +
                             "QWERTYUIOPASDFGHJKLZXCVBNM!@#$%^&*()[]{}\\" +
                             "|:;\"'<>,./-_+="]
