@@ -25,7 +25,7 @@ def draw_screen(s: State):
     for hl in range(min(s.highlighted), max(s.highlighted)):
         s.scr.addstr(hl, 0, " "*s.scr.getmaxyx()[1], curses.A_REVERSE)
 
-def main(self):
+def main(s: State):
     while True:
         s.scr.clear()
         draw_screen(s)
