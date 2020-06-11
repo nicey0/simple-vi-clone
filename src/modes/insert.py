@@ -1,4 +1,5 @@
 from curses import KEY_BACKSPACE as BS
+from curses import KEY_ENTER as CR
 import modes.mode as mode
 import modes.normal as normal
 import messages as m
@@ -15,6 +16,8 @@ class AddText(mode.Mode):
     def process_key(self, key: int) -> tuple:
         if key == BS:
             return (m.Message.SWITCH, normal.Normal)
+        elif key == CR or key == 10 or key == 13:
+            return (self.addType, '\n')
         elif key in self.allowdchars:
             return (self.addType, chr(key))
         else:

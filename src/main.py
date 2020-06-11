@@ -16,7 +16,7 @@ def main(scr: curses.window):
     while True:
         s.scr.clear()
         draw_screen(s)
-        _debug(s.scr, s.mode, s.cursor, s.highlighted)
+        _debug(s.scr, s.mode, s.cursor, s.highlighted, s.debug)
         s.scr.move(s.cursor[0], s.cursor[1])
         s.scr.refresh()
         m, data = s.mode.process_key(s.scr.getch())
@@ -37,7 +37,8 @@ def main(scr: curses.window):
             break
         elif m == M.SAVE:
             with open(s.filename, 'w') as f:
-                f.writelines(s.content)
+                for line in s.content:
+                    f.write(line + '\n')
         elif m == M.INSERTL:
             s.content[s.cursor[0]] = data + s.content[s.cursor[0]]
         elif m == M.APPENDL:
@@ -52,6 +53,14 @@ def main(scr: curses.window):
             s.content[s.cursor[0]] = line[0:s.cursor[1]+1] + data + \
                 line[s.cursor[1]+1:]
             s.cursor[1] += 1
+        elif m == M.DEBUG:
+            if data not in s.debug:
+                s.debug.append(data)
+        # Newlines
+        for i, line in enumerate(s.content):
+            split = line.split('\n')
+            if len(split) > 1:
+                s.content = s.content[0:i] + split + s.content[i+1:]
         # Highlighting
         if s.mode.highlights:
             if not s.last_hl:

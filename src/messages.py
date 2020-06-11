@@ -8,3 +8,4 @@ class Message:
     APPEND = 6
     INSERTL = 7
     APPENDL = 8
+    DEBUG = 9
