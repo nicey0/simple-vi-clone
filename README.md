@@ -6,13 +6,16 @@ Simple Vi clone. Not supposed to be used by anyone.
 ## Modes
 - Insert
     - \<BS\>: normal mode
+    - \<alphabet and symbols\>: add text to content
+    -  \<CR\>: insert new line
 - Normal
     - j/k/h/l: down/up/left/right
-    - x: delete character on cursor (cursor shifts to left, like \<BS\>)
+    - x: delete character on cursor
+    - X: delete character behind cursor
     - d: delete line
     - y: yank line
     - p: paste last yanked line (below cursor)
-    - P: paste last yanked line (above cursor)
+    - P: paste last yanked line (on cursor, shift current line down)
     - i: insert mode (behind cursor)
     - I: insert mode (start of line)
     - a: insert mode (in front of cursor)
@@ -36,6 +39,6 @@ Simple Vi clone. Not supposed to be used by anyone.
 - /src/modes/
     - Contains most of the logic for each mode. Modes here never interact directly 
     - /src/modes/mode.py    => base class
-    - /src/modes/insert.py  => insert mode
+    - /src/modes/insert.py  => insert, line-insert, append and line-append mode
     - /src/modes/normal.py  => normal mode
     - /src/modes/visual.py  => visual mode (line-based)
