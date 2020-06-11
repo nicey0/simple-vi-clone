@@ -60,7 +60,8 @@ def main(scr: curses.window):
         for i, line in enumerate(s.content):
             split = line.split('\n')
             if len(split) > 1:
-                s.content = s.content[0:i] + split + s.content[i+1:]
+                s.content = s.content[0:i] + [s.replace('\n', '') for s in
+                                              split] + s.content[i+1:]
         # Highlighting
         if s.mode.highlights:
             if not s.last_hl:
