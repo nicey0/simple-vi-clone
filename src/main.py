@@ -43,8 +43,9 @@ def main(scr: curses.window):
         elif m == M.APPENDL:
             s.content[s.cursor[0]] += data
         elif m == M.INSERT:
-            # s.content[s.cursor[0]] = data + s.content[s.cursor[0]]
-            pass
+            line: str = s.content[s.cursor[0]]
+            s.content[s.cursor[0]] = line[0:s.cursor[1]] + data + \
+                line[s.cursor[1]:]
         elif m == M.APPEND:
             # s.content[s.cursor[0]] += data
             pass

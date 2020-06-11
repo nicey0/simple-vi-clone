@@ -6,5 +6,5 @@ class Message:
     SAVE = 4
     INSERT = 5
     APPEND = 6
-    INSERTL = 5
-    APPENDL = 6
+    INSERTL = 7
+    APPENDL = 8
