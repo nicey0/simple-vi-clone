@@ -13,3 +13,4 @@ class State:
         self.last_hl: bool = False  # if the program was highlighting lines in
         # the last iteration
         self.mode: mode.Mode = normal.Normal()
+        self.debug: list = []
