@@ -19,6 +19,8 @@ class Normal(mode.Mode):
             return (m.Message.CURSOR, [0, 1])
         elif key == ord('i'):
             return (m.Message.SWITCH, insert.Insert)
+        elif key == ord('a'):
+            return (m.Message.SWITCH, insert.Append)
         elif key == ord('v'):
             return (m.Message.SWITCH, visual.Visual)
         elif key == ord('W'):
