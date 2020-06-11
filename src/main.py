@@ -39,9 +39,9 @@ def main(scr: curses.window):
             with open(s.filename, 'w') as f:
                 f.writelines(s.content)
         elif m == M.INSERT:
-            s.content[s.cursor[0]] = data + s.cursor[0]
+            s.content[s.cursor[0]] = data + s.content[s.cursor[0]]
         elif m == M.APPEND:
-            s.content[s.cursor[0]] += s.cursor[0]
+            s.content[s.cursor[0]] += data
         # Highlighting
         if s.mode.highlights:
             if not s.last_hl:

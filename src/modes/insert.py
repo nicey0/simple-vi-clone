@@ -21,3 +21,19 @@ class Insert(mode.Mode):
 
     def __str__(self):
         return "insert"
+
+
+class Append(Insert):
+    def __init__(self):
+        super().__init__()
+
+    def process_key(self, key: int) -> tuple:
+        if key == BS:
+            return (m.Message.SWITCH, normal.Normal)
+        elif key in self.allowdchars:
+            return (m.Message.APPEND, chr(key))
+        else:
+            return (m.Message.CONTINUE, 0)
+
+    def __str__(self):
+        return "append"
