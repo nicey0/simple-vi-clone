@@ -18,6 +18,8 @@ Simple Vi clone. Not supposed to be used by anyone.
     - a: insert mode (in front of cursor)
     - A: insert mode (end of line)
     - v: line visual mode
+    - W: save file
+    - q: quit
 - Visual
     - \<BS\>: normal mode
     - j/k: down/up
