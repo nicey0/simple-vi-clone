@@ -1,53 +1,78 @@
 import curses
+from traceback import print_exc
 from modes.mode import Mode
 from modes.normal import Normal
 from messages import Message as M
 
-def draw_screen(scr: curses.window, cursor: list, highlighted: list) -> None:
-    # Highlighted lines
-    for hl in range(min(highlighted), max(highlighted)):
-        scr.addstr(hl, 0, " "*scr.getmaxyx()[1], curses.A_REVERSE)
+class Main:
+    scr: curses.window
+    filename: str
+    cursor: list
+    highlighted: list
+    last_hl: bool
+    mode: Mode
 
-def debug(scr: curses.window, *args):
-    sargs = str(args)[1:-1]
-    scr.addstr(scr.getmaxyx()[0]-1, 1, sargs)
+    def __init__(self, **kwargs):
+        self.scr = curses.initscr()
+        self.filename = kwargs.get('filename')
+        self.cursor = [0, 0] # y, x
+        self.highlighted = [0, 0] # start, current
+        self.last_hl = False # if the program was highlighting lines in the last iteration
+        self.mode = Normal()
 
-def main(scr: curses.window) -> None:
-    cursor: list = [0, 0] # y, x
-    highlighted: list = [0, 0] # start, current
-    last_hl: bool = False # if the program was highlighting lines in the last iteration
-    mode: Mode = Normal()
-    while True:
-        scr.clear()
-        draw_screen(scr, cursor, highlighted)
-        debug(scr, mode, cursor, highlighted)
-        scr.move(cursor[0], cursor[1])
-        scr.refresh()
-        m, data = mode.process_key(scr.getch())
-        if m == M.CURSOR:
-            cursor[0] += data[0]
-            if cursor[0] < 0:
-                cursor[0] = 0
-            elif cursor[0] > scr.getmaxyx()[0]-1:
-                cursor[0] = scr.getmaxyx()[0]-1
-            cursor[1] += data[1]
-            if cursor[1] < 0:
-                cursor[1] = 0
-            elif cursor[1] > scr.getmaxyx()[1]-1:
-                cursor[1] = scr.getmaxyx()[1]-1
-        elif m == M.SWITCH:
-            mode = data()
-        elif m == M.BREAK:
-            break
-        # Highlighting
-        if mode.highlights:
-            if not last_hl:
-                highlighted[0] = cursor[0]
-            highlighted[1] = cursor[0]
-        else:
-            if last_hl:
-                highlighted = [0, 0]
-        last_hl = mode.highlights
+    def draw_screen(self) -> None:
+        # Highlighted lines
+        for hl in range(min(self.highlighted), max(self.highlighted)):
+            self.scr.addstr(hl, 0, " "*self.scr.getmaxyx()[1], curses.A_REVERSE)
+
+    def _debug(self, *args):
+        sargs = str(args)[1:-1]
+        self.scr.addstr(self.scr.getmaxyx()[0]-1, 1, sargs)
+
+    def main(self):
+        while True:
+            self.scr.clear()
+            self.draw_screen()
+            self._debug(self.mode, self.cursor, self.highlighted)
+            self.scr.move(self.cursor[0], self.cursor[1])
+            self.scr.refresh()
+            m, data = self.mode.process_key(self.scr.getch())
+            if m == M.CURSOR:
+                self.cursor[0] += data[0]
+                if self.cursor[0] < 0:
+                    self.cursor[0] = 0
+                elif self.cursor[0] > self.scr.getmaxyx()[0]-1:
+                    self.cursor[0] = self.scr.getmaxyx()[0]-1
+                self.cursor[1] += data[1]
+                if self.cursor[1] < 0:
+                    self.cursor[1] = 0
+                elif self.cursor[1] > self.scr.getmaxyx()[1]-1:
+                    self.cursor[1] = self.scr.getmaxyx()[1]-1
+            elif m == M.SWITCH:
+                self.mode = data()
+            elif m == M.BREAK:
+                break
+            # Highlighting
+            if self.mode.highlights:
+                if not self.last_hl:
+                    self.highlighted[0] = self.cursor[0]
+                self.highlighted[1] = self.cursor[0]
+            else:
+                if self.last_hl:
+                    self.highlighted = [0, 0]
+            self.last_hl = self.mode.highlights
+
+    def run(self):
+        try:
+            curses.start_color()
+            curses.noecho()
+            curses.cbreak()
+            self.scr.keypad(True)
+            self.main()
+        except:
+            print_exc()
+            curses.endwin()
 
 if __name__ == '__main__':
-    curses.wrapper(main)
+    main = Main()
+    main.run()
