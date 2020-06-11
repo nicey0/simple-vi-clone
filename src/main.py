@@ -16,7 +16,7 @@ class State:
     def __init__(self, filename: str = ""):
         self.scr = curses.initscr()
         self.filename = filename if filename != "" else None
-        self.content = [""]
+        self.content = ["testline0", "testline1", "testline2"]
         self.cursor = [0, 0] # y, x
         self.highlighted = [0, 0] # start, current
         self.last_hl = False # if the program was highlighting lines in the last iteration
@@ -24,8 +24,10 @@ class State:
 
 def draw_screen(s: State):
     # Highlighted lines
-    for hl in range(min(s.highlighted), max(s.highlighted)):
-        s.scr.addstr(hl, 0, " "*s.scr.getmaxyx()[1], curses.A_REVERSE)
+    # for hl in range(min(s.highlighted), max(s.highlighted)):
+        # s.scr.addstr(hl, 0, " "*s.scr.getmaxyx()[1], curses.A_REVERSE)
+    for i, line in enumerate(s.content):
+        s.scr.addstr(i+1, 0, line[0:s.scr.getmaxyx()[1]])
 
 def main(s: State):
     while True:
