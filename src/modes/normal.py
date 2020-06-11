@@ -1,12 +1,13 @@
 import modes.mode as mode
 import modes.insert as insert
-import modes.normal as normal
 import modes.visual as visual
 import messages as m
+
 
 class Normal(mode.Mode):
     def __init__(self):
         self.highlights = False
+
     def process_key(self, key: int) -> tuple:
         if key == ord('j'):
             return (m.Message.CURSOR, [1, 0])
@@ -26,5 +27,6 @@ class Normal(mode.Mode):
             return (m.Message.BREAK, 0)
         else:
             return (m.Message.CONTINUE, 0)
+
     def __str__(self):
         return "normal"

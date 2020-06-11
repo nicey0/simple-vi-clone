@@ -3,9 +3,11 @@ import modes.mode as mode
 import modes.normal as normal
 import messages as m
 
+
 class Visual(mode.Mode):
     def __init__(self):
         self.highlights = True
+
     def process_key(self, key: int) -> tuple:
         if key == BS:
             return (m.Message.SWITCH, normal.Normal)
@@ -15,5 +17,6 @@ class Visual(mode.Mode):
             return (m.Message.CURSOR, [-1, 0])
         else:
             return (m.Message.CONTINUE, 0)
+
     def __str__(self):
         return "visual"

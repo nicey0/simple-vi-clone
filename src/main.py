@@ -1,16 +1,16 @@
 import curses
 from traceback import print_exc
-import modes.mode as mode
-import modes.normal as normal
 from messages import Message as M
 from state import State
+
 
 def draw_screen(s: State):
     # Highlighted lines
     # for hl in range(min(s.highlighted), max(s.highlighted)):
-        # s.scr.addstr(hl, 0, " "*s.scr.getmaxyx()[1], curses.A_REVERSE)
+    #   s.scr.addstr(hl, 0, " "*s.scr.getmaxyx()[1], curses.A_REVERSE)
     for i, line in enumerate(s.content):
         s.scr.addstr(i+1, 0, line[0:s.scr.getmaxyx()[1]])
+
 
 def main(s: State):
     while True:
@@ -50,6 +50,7 @@ def main(s: State):
                 s.highlighted = [0, 0]
         s.last_hl = s.mode.highlights
 
+
 def run(s: State):
     try:
         curses.start_color()
@@ -57,9 +58,10 @@ def run(s: State):
         curses.cbreak()
         s.scr.keypad(True)
         main(s)
-    except:
+    except Exception:
         end(s)
         print_exc()
+
 
 def end(s: State):
     s.scr.keypad(False)
@@ -67,9 +69,11 @@ def end(s: State):
     curses.echo()
     curses.endwin()
 
+
 def _debug(scr: curses.window, *args):
     sargs = str(args)[1:-1]
     scr.addstr(scr.getmaxyx()[0]-1, 1, sargs)
+
 
 if __name__ == '__main__':
     s = State("hello.py")
