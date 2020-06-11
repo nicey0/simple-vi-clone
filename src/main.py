@@ -7,6 +7,7 @@ from messages import Message as M
 class State:
     scr: curses.window
     filename: str
+    content: list
     cursor: list
     highlighted: list
     last_hl: bool
@@ -15,6 +16,7 @@ class State:
     def __init__(self, filename: str = ""):
         self.scr = curses.initscr()
         self.filename = filename if filename != "" else None
+        self.content = [""]
         self.cursor = [0, 0] # y, x
         self.highlighted = [0, 0] # start, current
         self.last_hl = False # if the program was highlighting lines in the last iteration
@@ -48,6 +50,9 @@ def main(s: State):
             s.mode = data()
         elif m == M.BREAK:
             break
+        elif m == M.SAVE:
+            with open(s.filename, 'w') as f:
+                f.write(s.content)
         # Highlighting
         if s.mode.highlights:
             if not s.last_hl:
