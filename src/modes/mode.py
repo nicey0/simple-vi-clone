@@ -1,4 +1,3 @@
-
 class Mode:
     def __init__(self):
         self.highlights: bool
