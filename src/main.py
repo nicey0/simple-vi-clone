@@ -42,6 +42,12 @@ def main(scr: curses.window):
             s.content[s.cursor[0]] = data + s.content[s.cursor[0]]
         elif m == M.APPENDL:
             s.content[s.cursor[0]] += data
+        elif m == M.INSERT:
+            # s.content[s.cursor[0]] = data + s.content[s.cursor[0]]
+            pass
+        elif m == M.APPEND:
+            # s.content[s.cursor[0]] += data
+            pass
         # Highlighting
         if s.mode.highlights:
             if not s.last_hl:
