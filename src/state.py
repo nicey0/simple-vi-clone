@@ -9,7 +9,7 @@ class State:
         self.filename: str = filename if filename != "" else None
         self.content: list = ["testline0", "testline1", "testline2"]
         self.cursor: list = [0, 0]  # y, x
-        self.highlighted: list = [0, 0]  # start, current
+        self.highlighted: list = [-1, -1]  # start, current
         self.last_hl: bool = False  # if the program was highlighting lines in
         # the last iteration
         self.mode: mode.Mode = normal.Normal()
