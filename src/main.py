@@ -26,7 +26,15 @@ def main(scr: curses.window) -> None:
         m, data = mode.process_key(scr.getch())
         if m == M.CURSOR:
             cursor[0] += data[0]
+            if cursor[0] < 0:
+                cursor[0] = 0
+            elif cursor[0] > scr.getmaxyx()[0]:
+                cursor[0] = scr.getmaxyx()[0]
             cursor[1] += data[1]
+            if cursor[1] < 1:
+                cursor[1] = 1
+            elif cursor[1] > scr.getmaxyx()[1]:
+                cursor[1] = scr.getmaxyx()[1]
         elif m == M.SWITCH:
             mode = data()
         elif m == M.BREAK:
