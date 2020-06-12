@@ -2,47 +2,43 @@ from curses import KEY_BACKSPACE as BS
 from curses import KEY_ENTER as CR
 import modes.mode as mode
 import modes.normal as normal
-import messages as m
+from state import State
 
 
 class AddText(mode.Mode):
-    def __init__(self, addType: int):
+    def __init__(self):
         self.highlights = False
         self.allowdchars = [ord(c) for c in "qwertyuiopasdfghjklzxcvbnm" +
                             "QWERTYUIOPASDFGHJKLZXCVBNM!@#$%^&*()[]{}\\" +
                             "|:;\"'<>,./-_+= "]
-        self.addType = addType
 
-    def process_key(self, key: int) -> tuple:
+    def process_key(self, s: State, key: int) -> tuple:
         if key == BS:
-            return (m.Message.SWITCH, normal.Normal)
+            s.mode = normal.Normal()
         elif key == CR or key == 10 or key == 13:
-            return (self.addType, '\n')
+            self.line_fn(chr(key), s)
+            for i, line in enumerate(s.content):
+                split = line.split('\n')
+                split = [s.replace('\n', '') for s in split]
+                if len(split) > 1:
+                    s.content = s.content[0:i] + split + s.content[i+1:]
+            s.increase_cursor(1, 'start')
         elif key in self.allowdchars:
-            return (self.addType, chr(key))
-        else:
-            return (m.Message.CONTINUE, 0)
+            self.line_fn(chr(key), s)
 
-
-class InsertLine(AddText):
-    def __init__(self):
-        super().__init__(m.Message.INSERTL)
-
-    def __str__(self):
-        return "insert_line"
-
-
-class AppendLine(AddText):
-    def __init__(self):
-        super().__init__(m.Message.APPENDL)
-
-    def __str__(self):
-        return "append_line"
+    def line_fn(self, char: str, s: State):
+        raise NotImplementedError
 
 
 class Insert(AddText):
     def __init__(self):
-        super().__init__(m.Message.INSERT)
+        super().__init__()
+
+    def line_fn(self, char: str, s: State):
+        line: str = s.content[s.cursor[0]]
+        s.content[s.cursor[0]] = line[0:s.cursor[1]] + char + \
+            line[s.cursor[1]:]
+        s.increase_cursor(0, 1)
 
     def __str__(self):
         return "insert"
@@ -50,7 +46,13 @@ class Insert(AddText):
 
 class Append(AddText):
     def __init__(self):
-        super().__init__(m.Message.APPEND)
+        super().__init__()
+
+    def line_fn(self, char: str, s: State):
+        line: str = s.content[s.cursor[0]]
+        s.content[s.cursor[0]] = line[0:s.cursor[1]+1] + char + \
+            line[s.cursor[1]+1:]
+        s.increase_cursor(0, 1)
 
     def __str__(self):
         return "append"
