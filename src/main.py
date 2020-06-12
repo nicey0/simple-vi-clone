@@ -30,10 +30,6 @@ def main(scr: curses.window, filename: str):
         s.scr.move(s.cursor[0], s.cursor[1])
         s.scr.refresh()
         s.mode.process_key(s, s.scr.getch())
-        # Save
-        with open(s.filename, 'w') as f:
-            for line in s.content:
-                f.write(line + '\n')
         # Highlighting
         if s.mode.highlights:
             if not s.last_hl:

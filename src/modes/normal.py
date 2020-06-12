@@ -28,16 +28,23 @@ class Normal(mode.Mode):
             s.increase_cursor(0, 'end')
             s.mode = insert.Append()
         elif key == ord('o'):
+            # go to end, add newline and enter append mode
             s.increase_cursor(0, 'end')
             insert.Append().process_key(s, ord('\n'))
             s.mode = insert.Append()
         elif key == ord('O'):
+            # go to start, add newline, go up and enter append mode
             s.increase_cursor(0, 'start')
             insert.Insert().process_key(s, ord('\n'))
             s.increase_cursor(-1, 0)
             s.mode = insert.Append()
         elif key == ord('v'):
             s.mode = visual.Visual()
+        elif key == ord('w'):
+            # Save
+            with open(s.filename, 'w') as f:
+                for line in s.content:
+                    f.write(line + '\n')
         elif key == ord('q'):
             s.running = False
 
