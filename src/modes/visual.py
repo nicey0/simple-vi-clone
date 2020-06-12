@@ -1,22 +1,20 @@
 from curses import KEY_BACKSPACE as BS
 import modes.mode as mode
 import modes.normal as normal
-import messages as m
+from state import State
 
 
 class Visual(mode.Mode):
     def __init__(self):
         self.highlights = True
 
-    def process_key(self, key: int) -> tuple:
+    def process_key(self, s: State, key: int) -> tuple:
         if key == BS:
-            return (m.Message.SWITCH, normal.Normal)
+            s.mode = normal.Normal()
         elif key == ord('j'):
-            return (m.Message.CURSOR, [1, 0])
+            s.increase_cursor(1, 0)
         elif key == ord('k'):
-            return (m.Message.CURSOR, [-1, 0])
-        else:
-            return (m.Message.CONTINUE, 0)
+            s.increase_cursor(-1, 0)
 
     def __str__(self):
         return "visual"

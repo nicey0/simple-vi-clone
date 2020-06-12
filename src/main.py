@@ -1,5 +1,6 @@
 import curses
 from state import State
+from modes.normal import Normal
 
 
 def _debug(scr: curses.window, *args):
@@ -18,6 +19,7 @@ def draw_screen(s: State):
 
 def main(scr: curses.window):
     s = State(scr, "hello.txt")
+    s.mode = Normal()
     s.running = True
     while s.running:
         s.scr.clear()
