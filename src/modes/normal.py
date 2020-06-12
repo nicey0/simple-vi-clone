@@ -58,6 +58,8 @@ class Normal(mode.Mode):
             line = s.content[s.cursor[0]]
             s.content[s.cursor[0]] = line[:s.cursor[1]-1] + line[s.cursor[1]:]
             s.increase_cursor(0, 0)
+        elif key == ord('y'):
+            s.yank = s.content[s.cursor[0]]
         elif key == ord('q'):
             s.running = False
 

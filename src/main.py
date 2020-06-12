@@ -26,7 +26,7 @@ def main(scr: curses.window, filename: str):
     while s.running:
         s.scr.clear()
         draw_screen(s)
-        _debug(s.scr, s.mode, s.cursor, s.highlighted, s.debug)
+        _debug(s.scr, s.mode, s.cursor, s.highlighted, s.yank, s.debug)
         s.scr.move(s.cursor[0], s.cursor[1])
         s.scr.refresh()
         s.mode.process_key(s, s.scr.getch())
