@@ -10,7 +10,7 @@ class AddText(mode.Mode):
         self.highlights = False
         self.allowdchars = [ord(c) for c in "qwertyuiopasdfghjklzxcvbnm" +
                             "QWERTYUIOPASDFGHJKLZXCVBNM!@#$%^&*()[]{}\\" +
-                            "|:;\"'<>,./-_+= "]
+                            "|:;\"'<>,./-_+= ?1234567890"]
 
     def process_key(self, s: State, key: int) -> tuple:
         if key == BS:
