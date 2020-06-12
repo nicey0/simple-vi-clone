@@ -14,6 +14,7 @@ class State:
         self.mode: mode.Mode = None
         self.debug: list = []
         self.running: bool = False
+        self.yank = ""
 
     def increase_cursor(self, yinc: int, xinc: int):
         try:
