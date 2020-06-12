@@ -26,7 +26,7 @@ Simple Vi clone. Not supposed to be used by anyone.
 - Visual
     - (X) \<BS\>: normal mode
     - (X) j/k: down/up
-    - ( ) d: delete all highlighted lines
+    - (X) d: delete all highlighted lines
     - (X) y: yank all highlighted lines
 
 ---
