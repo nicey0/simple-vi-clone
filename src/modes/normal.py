@@ -17,6 +17,11 @@ class Normal(mode.Mode):
             s.increase_cursor(0, -1)
         elif key == ord('l'):
             s.increase_cursor(0, 1)
+        elif key == ord('d'):
+            s.content = s.content[:s.cursor[0]] + s.content[s.cursor[0]+1:]
+            if s.content == []:
+                s.content.append("")
+            s.increase_cursor(0, 'start')
         elif key == ord('i'):
             s.mode = insert.Insert()
         elif key == ord('I'):
@@ -48,9 +53,11 @@ class Normal(mode.Mode):
         elif key == ord('x'):
             line = s.content[s.cursor[0]]
             s.content[s.cursor[0]] = line[:s.cursor[1]] + line[s.cursor[1]+1:]
+            s.increase_cursor(0, 0)
         elif key == ord('X'):
             line = s.content[s.cursor[0]]
             s.content[s.cursor[0]] = line[:s.cursor[1]-1] + line[s.cursor[1]:]
+            s.increase_cursor(0, 0)
         elif key == ord('q'):
             s.running = False
 
