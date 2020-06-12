@@ -1,6 +1,8 @@
 import curses
 from state import State
+from modes.mode import Mode
 from modes.normal import Normal
+from sys import argv
 
 
 def _debug(scr: curses.window, *args):
@@ -17,9 +19,9 @@ def draw_screen(s: State):
             s.scr.addstr(i, 0, line[0:s.scr.getmaxyx()[1]])
 
 
-def main(scr: curses.window):
-    s = State(scr, "hello.txt")
-    s.mode = Normal()
+def main(scr: curses.window, filename: str):
+    s = State(scr, filename)
+    s.mode: Mode = Normal()
     s.running = True
     while s.running:
         s.scr.clear()
@@ -29,10 +31,9 @@ def main(scr: curses.window):
         s.scr.refresh()
         s.mode.process_key(s, s.scr.getch())
         # Save
-        if s.filename != "":
-            with open(s.filename, 'w') as f:
-                for line in s.content:
-                    f.write(line + '\n')
+        with open(s.filename, 'w') as f:
+            for line in s.content:
+                f.write(line + '\n')
         # Highlighting
         if s.mode.highlights:
             if not s.last_hl:
@@ -45,4 +46,5 @@ def main(scr: curses.window):
 
 
 if __name__ == '__main__':
-    curses.wrapper(main)
+    if len(argv) > 1:
+        curses.wrapper(main, argv[1])
