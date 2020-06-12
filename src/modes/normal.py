@@ -60,6 +60,15 @@ class Normal(mode.Mode):
             s.increase_cursor(0, 0)
         elif key == ord('y'):
             s.yank = s.content[s.cursor[0]]
+        elif key == ord('p'):
+            s.content.insert(s.cursor[0]+1, s.yank)
+            s.increase_cursor(1, 'start')
+        elif key == ord('P'):
+            if s.cursor[0] == 0:
+                s.content = [s.yank] + s.content
+            else:
+                s.content.insert(s.cursor[0], s.yank)
+            s.increase_cursor(-1, 'start')
         elif key == ord('q'):
             s.running = False
 
