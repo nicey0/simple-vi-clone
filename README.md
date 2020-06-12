@@ -12,10 +12,10 @@ Simple Vi clone. Not supposed to be used by anyone.
     - (X) j/k/h/l: down/up/left/right
     - (X) x: delete character on cursor
     - (X) X: delete character behind cursor
-    - ( ) d: delete line
-    - ( ) y: yank line
-    - ( ) p: paste last yanked line (below cursor)
-    - ( ) P: paste last yanked line (on cursor, shift current line down)
+    - (X) d: delete line
+    - (X) y: yank line
+    - (X) p: paste last yanked line (below cursor)
+    - (X) P: paste last yanked line (on cursor, shift current line down)
     - (X) i: insert mode (behind cursor)
     - (X) I: insert mode (start of line)
     - (X) a: insert mode (in front of cursor)
