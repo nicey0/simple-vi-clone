@@ -23,7 +23,7 @@ Simple Vi clone. Not supposed to be used by anyone.
     - (X) v: line visual mode
     - (X) W: save file
     - (X) q: quit
-- Xisual
+- Visual
     - (X) \<BS\>: normal mode
     - (X) j/k: down/up
     - ( ) d: delete all highlighted lines
