@@ -19,13 +19,22 @@ class Normal(mode.Mode):
             s.increase_cursor(0, 1)
         elif key == ord('i'):
             s.mode = insert.Insert()
-        elif key == ord('a'):
-            s.mode = insert.Append()
         elif key == ord('I'):
             s.increase_cursor(0, 'start')
             s.mode = insert.Insert()
+        elif key == ord('a'):
+            s.mode = insert.Append()
         elif key == ord('A'):
             s.increase_cursor(0, 'end')
+            s.mode = insert.Append()
+        elif key == ord('o'):
+            s.increase_cursor(0, 'end')
+            insert.Append().process_key(s, ord('\n'))
+            s.mode = insert.Append()
+        elif key == ord('O'):
+            s.increase_cursor(0, 'start')
+            insert.Insert().process_key(s, ord('\n'))
+            s.increase_cursor(-1, 0)
             s.mode = insert.Append()
         elif key == ord('v'):
             s.mode = visual.Visual()

@@ -15,7 +15,7 @@ class AddText(mode.Mode):
     def process_key(self, s: State, key: int) -> tuple:
         if key == BS:
             s.mode = normal.Normal()
-        elif key == CR or key == 10 or key == 13:
+        elif key == CR or key == ord('\n') or key == 13:
             self.line_fn(chr(key), s)
             for i, line in enumerate(s.content):
                 split = line.split('\n')
