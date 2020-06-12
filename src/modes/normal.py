@@ -1,38 +1,34 @@
 import modes.mode as mode
 import modes.insert as insert
 import modes.visual as visual
-import messages as m
+from state import State
 
 
 class Normal(mode.Mode):
     def __init__(self):
         self.highlights = False
 
-    def process_key(self, key: int) -> tuple:
+    def process_key(self, s: State, key: int) -> tuple:
         if key == ord('j'):
-            return (m.Message.CURSOR, [1, 0])
+            s.increase_cursor(1, 0)
         elif key == ord('k'):
-            return (m.Message.CURSOR, [-1, 0])
+            s.increase_cursor(-1, 0)
         elif key == ord('h'):
-            return (m.Message.CURSOR, [0, -1])
+            s.increase_cursor(0, -1)
         elif key == ord('l'):
-            return (m.Message.CURSOR, [0, 1])
+            s.increase_cursor(0, 1)
         elif key == ord('i'):
-            return (m.Message.SWITCH, insert.Insert)
+            s.mode = insert.Insert()
         elif key == ord('a'):
-            return (m.Message.SWITCH, insert.Append)
+            s.mode = insert.Append()
         elif key == ord('I'):
-            return (m.Message.SWITCH, insert.InsertLine)
+            s.mode = insert.InsertLine()
         elif key == ord('A'):
-            return (m.Message.SWITCH, insert.AppendLine)
+            s.mode = insert.AppendLine()
         elif key == ord('v'):
-            return (m.Message.SWITCH, visual.Visual)
-        elif key == ord('W'):
-            return (m.Message.SAVE, 0)
+            s.mode = visual.Visual()
         elif key == ord('q'):
-            return (m.Message.BREAK, 0)
-        else:
-            return (m.Message.CONTINUE, 0)
+            s.running = False
 
     def __str__(self):
         return "normal"
