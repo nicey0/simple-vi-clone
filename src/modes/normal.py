@@ -22,9 +22,11 @@ class Normal(mode.Mode):
         elif key == ord('a'):
             s.mode = insert.Append()
         elif key == ord('I'):
-            s.mode = insert.InsertLine()
+            s.increase_cursor(0, 'start')
+            s.mode = insert.Insert()
         elif key == ord('A'):
-            s.mode = insert.AppendLine()
+            s.increase_cursor(0, 'end')
+            s.mode = insert.Append()
         elif key == ord('v'):
             s.mode = visual.Visual()
         elif key == ord('q'):
