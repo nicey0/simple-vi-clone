@@ -45,6 +45,12 @@ class Normal(mode.Mode):
             with open(s.filename, 'w') as f:
                 for line in s.content:
                     f.write(line + '\n')
+        elif key == ord('x'):
+            line = s.content[s.cursor[0]]
+            s.content[s.cursor[0]] = line[:s.cursor[1]] + line[s.cursor[1]+1:]
+        elif key == ord('X'):
+            line = s.content[s.cursor[0]]
+            s.content[s.cursor[0]] = line[:s.cursor[1]-1] + line[s.cursor[1]:]
         elif key == ord('q'):
             s.running = False
 
