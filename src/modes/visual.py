@@ -15,8 +15,17 @@ class Visual(mode.Mode):
             s.increase_cursor(1, 0)
         elif key == ord('k'):
             s.increase_cursor(-1, 0)
+        elif key == ord('h'):
+            s.increase_cursor(0, -1)
+        elif key == ord('l'):
+            s.increase_cursor(0, 1)
         elif key == ord('y'):
             s.yankl = s.content[s.highlighted[0]:s.highlighted[1]+1]
+        elif key == ord('d'):
+            s.content = s.content[:min(s.highlighted)] + \
+                s.content[max(s.highlighted)+1:]
+            s.mode = normal.Normal()
+            s.increase_cursor(0, 0)
 
     def __str__(self):
         return "visual"
