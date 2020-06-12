@@ -5,29 +5,29 @@ Simple Vi clone. Not supposed to be used by anyone.
 
 ## Modes
 - Insert
-    - \<BS\>: normal mode
-    - \<alphabet and symbols\>: add text to content
-    -  \<CR\>: insert new line
+    - (X) \<BS\>: normal mode
+    - (X) \<alphabet and symbols\>: add text to content
+    - (X)  \<CR\>: insert new line
 - Normal
-    - j/k/h/l: down/up/left/right
-    - x: delete character on cursor
-    - X: delete character behind cursor
-    - d: delete line
-    - y: yank line
-    - p: paste last yanked line (below cursor)
-    - P: paste last yanked line (on cursor, shift current line down)
-    - i: insert mode (behind cursor)
-    - I: insert mode (start of line)
-    - a: insert mode (in front of cursor)
-    - A: insert mode (end of line)
-    - v: line visual mode
-    - W: save file
-    - q: quit
-- Visual
-    - \<BS\>: normal mode
-    - j/k: down/up
-    - d: delete all highlighted lines
-    - y: yank all highlighted lines
+    - (X) j/k/h/l: down/up/left/right
+    - (X) x: delete character on cursor
+    - (X) X: delete character behind cursor
+    - ( ) d: delete line
+    - ( ) y: yank line
+    - ( ) p: paste last yanked line (below cursor)
+    - ( ) P: paste last yanked line (on cursor, shift current line down)
+    - (X) i: insert mode (behind cursor)
+    - (X) I: insert mode (start of line)
+    - (X) a: insert mode (in front of cursor)
+    - (X) A: insert mode (end of line)
+    - (X) v: line visual mode
+    - (X) W: save file
+    - (X) q: quit
+- Xisual
+    - (X) \<BS\>: normal mode
+    - (X) j/k: down/up
+    - ( ) d: delete all highlighted lines
+    - ( ) y: yank all highlighted lines
 
 ---
 
